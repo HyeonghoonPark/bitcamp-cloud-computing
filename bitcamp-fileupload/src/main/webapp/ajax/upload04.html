@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax 파일 업로드</title>
+</head>
+<body>
+<h1>AJAX 멀티파트 전송 - 각 파일의 진행상태 표시하기</h1>
+<pre>
+1) jquery.fileupload() 함수
+   - 버튼을 클릭 했을 때 서버에 비동기 요청하도록 설정한다.
+   - 바로 파일을 업로드 하라는 의미가 아니다.
+   - 여러 개의 파일을 선택했을 때, 각 파일마다 따로 비동기 요청을 수행함. 
+   - fileupload()에 넘길 파라미터 객체를 정의할 때, add 프로퍼티 추가한다.
+   - 각 업로드 파일에 대해 add() 함수가 호출되고, 업로드가 완료되면 done()을 호출된다.
+   - add()가 호출될 때 data 파라미터에 대해 submit()을 호출해야만 서버에 전송한다.
+</pre>
+
+<input id="fileupload" type="file" name="files" 
+       data-url="../mvc/ajax/upload01" multiple>
+<hr>
+<div id="imgList"></div>
+
+
+<script src='node_modules/jquery/dist/jquery.js'></script>
+<script src="node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="node_modules/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+<script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script>
+"use strict"
+
+$('#fileupload').fileupload({
+    dataType: 'json',
+    
+    // 업로드 할 파일을 선택하면, 각 파일에 대해 add()가 호출된다.
+    // => add() 메서드가 존재한다면 자동 요청을 하지 않는다.
+    // => 서버에 파일업로드를 요청하려면 submit()을 명시적으로 호출해야 한다.
+    add: function (e, data) { 
+        console.log('add()...');
+        
+        // data.context는 해당 파일을 업로드 하는 동안 유지되는 프로퍼티이다.
+        // 용도?
+        // => 파일을 업로드 하는 동안 업로드 중임을 표시하는 p 태그를 보관할 수 있다.
+        data.context = $('<p>').text('업로드 중...')
+                               .appendTo($('#imgList'));
+        data.submit(); // 해당 파일의 서버 전송을 시작한다.
+    },
+    done: function (e, data) {
+      console.log('done()...');
+      console.log(data.result);
+      var pTag = data.context;
+      var filename = data.result.filenames[0];
+      
+      setTimeout(()=>{
+	      pTag.html('');
+	      $('<img>').attr('src', '../files/' + filename)
+	                .appendTo(pTag);
+      }, 5000);
+    }
+});
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

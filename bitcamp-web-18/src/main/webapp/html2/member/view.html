@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+</head>
+<body>
+<h1>멤버 보기</h1>
+<form>
+<table border='1'>
+<tr><th>아이디</th><td>
+    <input type='text' id='eId' readonly></td></tr>
+<tr><th>이메일</th>
+    <td><input type='email' id='eEmail'></td></tr>
+<tr><th>암호</th>
+    <td><input type='password' id='ePassword'></td></tr>
+</table>
+<p>
+<button id="eListBtn" type="button">목록</button>
+<button id="eUpdateBtn" type="button" class="viewform">변경</button>
+<button id="eDeleteBtn" type="button" class="viewform">삭제</button>
+<button id="eAddBtn" type="button" class="newform">등록</button>
+</p>
+</form>
+
+<script src="../js/bit.min.js"></script>
+<script>
+"use strict"
+
+var data = null;
+var {id, page, size} = $.parseQuery(location.href);
+
+if (id == undefined) { // 입력 폼 
+    $('.viewform').css('display', 'none');
+    $(eId).removeAttr("readonly");
+    
+} else { // 상세 보기 폼
+    $('.newform').css('display', 'none');
+
+    $.getJSON(`../../json/member/view/${id}`, 
+        function(result) {
+	        data = result;
+	        if (data.member == null) {
+	            alert('아이디가 무효합니다.');
+	            location.href = "list.html";
+	            return;
+	        }
+	        $(eId).val(data.member.id);
+	        $(eEmail).val(data.member.email);
+    });
+}
+
+$(eListBtn).click(function() {
+    if (page) {
+        location.href = `list.html?page=${page}&size=${size}`;
+    } else {
+        location.href = 'list.html';
+    }
+});
+
+$(eUpdateBtn).click(function() {
+    $.post('../../json/member/update', 
+        {
+            id: $(eId).val(), 
+            email: $(eEmail).val(), 
+            password: $(ePassword).val()
+        },
+        function(data) {
+	        if (data.status == 'success') {
+	            location.href = `list.html?page=${page}&size=${size}`;
+	        } else {
+	            alert('변경 오류입니다!');
+	            console.log(data.error);
+	        }
+        },
+        'json');
+});
+
+$(eDeleteBtn).click(function() {
+    $.getJSON(`../../json/member/delete?id=${eId.value}`, 
+        function(data) {
+	        if (data.status == 'success') {
+	            location.href = `list.html?page=${page}&size=${size}`;
+	        } else {
+	            alert('삭제 오류입니다!');
+	            console.log(data.error);
+	        }
+    });
+});
+
+$(eAddBtn).click(function() {
+    $.post('../../json/member/add', 
+        {
+            id: $(eId).val(), 
+            email: $(eEmail).val(), 
+            password: $(ePassword).val()
+        },
+        function(data) {
+            location.href = 'list.html';
+        },
+        'json');
+});
+    
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+    

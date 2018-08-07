@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>태그의 기본 행위를 막기 - form의 submit 이벤트</h1>
+
+<form id="form1" action="http://www.daum.net" 
+      onsubmit="return checkValidate()">
+*이름: <input id="fiName" type="text" name="name"><br>
+*나이: <input id="fiAge" type="number" name="age"><br>
+전화:  <input id="fiTel" type="text" name="tel"><br>
+<input type="submit" value="등록"><br>
+</form>
+
+<script>
+"use strict"
+
+// onsubmit의 코드 실행 리턴 값이 true이면 입력 폼의 action을 실행하고,
+// false이면 실행하지 않는 특징을 이용한다.
+function checkValidate() {
+    if (fiName.value.length == 0 || fiAge.value.length == 0) {
+        alert("필수 항목을 입력하세요!");
+        return false;
+    }
+    return true;
+};
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
