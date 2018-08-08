@@ -49,6 +49,7 @@ const server = http.createServer((req, res)=>{
             return;
         }
         
+        res.write('등록 성공')
         res.end(); 
     });
    });
