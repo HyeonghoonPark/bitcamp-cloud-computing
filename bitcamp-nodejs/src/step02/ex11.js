@@ -4,7 +4,7 @@ const mysql = require('mysql');
 
 var pool = mysql.createPool({
     connectionLimit : 10, // 접속자 수
-    host: '13.209.35.254', 
+    host: '13.125.254.147', 
     //port: '3306',
     database: 'studydb',
     user: 'study',

@@ -1,4 +1,4 @@
-// 주제: 데이터베이스 프로그래밍 - insert 실행
+// 주제: 데이터베이스 프로그래밍 - insert 실행 후 auto_increment PK 컬럼 값 알라내기
 
 const mysql = require('mysql');
 
@@ -16,18 +16,18 @@ con.connect(function(err) {
     console.log('연결 성공입니다!');
 });
 
-var email = 'user003@test.com';
-var mid = 'user003';
-var pwd = '1111';
+var title = '제목입니다.';
+var content = '내용입니다.';
 
 con.query(
-    `insert into pms2_member(email,mid,pwd)
-     values('${email}', '${mid}', password('${pwd}'))`, 
-    function(err, result) {
+    'insert into pms2_board(titl,cont,cdt)values(?,?,now())'
+    ,[title, content]
+    ,function(err, result) {
         if (err) throw err;
+        console.log('입력 성공!');
         
-    console.log('입력 성공!');
-});
+        console.log(result.insertId); // 들어간 A.I 값
+    });
 
 
 con.end(function(err) {
