@@ -36,15 +36,3 @@ con.end(function(err) {
 }); 
 
 console.log('select 실행!');
-
-
-
-
-
-
-
-
-
-
-
-
