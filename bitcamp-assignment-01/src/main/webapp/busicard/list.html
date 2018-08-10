@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+<!-- <Style>
+#commit{
+display : none;
+}
+#cancle{
+display : none;
+}
+</Style> -->
+</head>
+<body>
+<div class="container">
+
+<h1>개인 명함 관리</h1>
+<p><a href='SignIn.html' class="btn btn-primary btn-sm">로그아웃</a></p>
+
+<div class="row">
+<div class="col-md-3" id="divLeft">
+
+</div>
+
+<div class="col-md-9" id="divRight">
+<form>
+
+
+
+</div>
+<div>
+  <button id="add" class="btn btn-outline-secondary btn-sm">추가</button>
+  <button id="commit" class="btn btn-outline-secondary btn-sm" style="display:none">완료</button>
+  <button id="removeMember" class="btn btn-outline-secondary btn-sm">삭제</button>
+  <button id="cancle" class="btn btn-outline-secondary btn-sm" style="display:none">취소</button>
+</div>
+</div>
+</form>
+<p><a id="remove" class="btn btn-primary btn-sm">회원탈퇴</a></p>
+
+
+</div><!-- .container -->
+
+<script src="./node_modules/handlebars/dist/handlebars.min.js"></script>
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./js/common.js"></script>
+
+<script id="right-template" type="text/x-handlebars-template">
+
+이름 <input type="text" id="name" value="{{name}}"><br>
+휴대 전화<input type="text" id="telphone" value="{{telphone}}"><br>
+일반 전화<input type="text" id="tel" value="{{tel}}"><br>
+팩스<input type="text" id="fax" value="{{fax}}"><br>
+이메일<input type="text" id="email" value="{{email}}"><br>
+메모<textarea type="text" id="memo" value="{{memo}}">{{memo}}</textarea>
+
+</script>
+
+<script id="left-template" type="text/x-handlebars-template">
+
+<input type="text">
+<hr>
+{{#each list}}
+<p class="clickName" value="{{name}}">{{name}}</p><br>
+{{/each}}
+
+</script>
+
+<script>
+let dName = '';
+let bno = location.search.substr(location.search.indexOf("?") + 1).split("=")[1];
+loadList();
+
+$('#cancle').on('click',function(){
+    location.reload();
+})
+
+$('#add').on('click',function(){
+    var trTemplateSrc = $('#right-template').text();
+    var trTemplateFn = Handlebars.compile(trTemplateSrc);
+    var trListHTML = trTemplateFn();
+    console.log(trListHTML)
+    $('#divRight').text('')
+    $('#divRight').html(trListHTML)
+    
+    $('#add').css('display','none')
+    $('#remove').css('display','none')
+    $('#commit').css('display','')
+    $('#cancle').css('display','')
+    
+})
+ 
+$('#commit').on('click',function(){
+    
+    
+	
+    $.post(serverApiAddr + '/json/member/managementAdd', 
+            {
+        		bno : bno,
+		        name : $('#name').val(),
+		        telphone : $('#telphone').val(),
+		        tel : $('#tel').val(),
+		        fax : $('#fax').val(),
+		        email : $('#email').val(),
+		        memo : $('#memo').val()
+            },
+            function(data) {
+                if (data.status == 'success') {
+                   
+                    alert('등록이 완료됐습니다!');
+                    location.href=`list.html?no=${data.bno}`;
+                    
+                } else {
+                    
+
+                    console.log('틀려요');
+                }
+            },
+            'json');
+
+})
+
+function loadList() {
+    console.log(`${bno}`);
+    $.getJSON(serverApiAddr + `/json/member/list/${bno}`, 
+      function(result) {
+        console.log("로딩 성공!")
+       data = result;
+       
+       var trTemplateSrc2 = $('#left-template').text();
+       var trTemplateFn2 = Handlebars.compile(trTemplateSrc2);
+       var trListHTML2 = trTemplateFn2({list: data.list});
+       
+       console.log(trListHTML2);
+       
+       $('#divLeft').html(trListHTML2);
+        })
+    
+}
+
+$(document).on('click','.clickName',function(){
+  var name = $(this).attr('value');  
+  dName = $(this).attr('value');  
+  console.log(name);
+  $.getJSON(serverApiAddr + `/json/member/view/${name}`, 
+          function(result) {
+            console.log("로딩 성공!")
+           data = result;
+           
+            console.log(data.member.memo);
+           var trTemplateSrc = $('#right-template').text();
+           var trTemplateFn = Handlebars.compile(trTemplateSrc);
+           var trListHTML = trTemplateFn(data.member);
+           
+           console.log(trListHTML);
+           
+           $('#divRight').html(trListHTML);
+  })
+            
+})
+
+$('#remove').click(function() {
+    $.getJSON(serverApiAddr + `/json/member/remove?bno=${bno}`, 
+        function(data) {
+            if (data.status == 'success') {
+                alert('탈퇴가 완료됐습니다!')
+                location.href = `SignIn.html`;
+            } else {
+                alert('삭제 오류입니다!');
+                console.log(data.error);
+            }
+    });
+});
+
+$('#removeMember').click(function(){
+    console.log(dName);
+    $.getJSON(serverApiAddr + `/json/member/removeMember?name=${dName}`, 
+            function(data) {
+                
+                    alert('삭제가 완료됐습니다!')
+                    location.href = `list.html`;
+               
+        });
+})
+
+
+
+</script>
+</body>
+</html>
+    
+    
+    
+    

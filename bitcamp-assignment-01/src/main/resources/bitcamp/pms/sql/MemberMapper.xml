@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.pms.dao.MemberDao">
+  
+   <select id="selectList" resultType="Member">
+    select name, telphone, tel, fax, email, memo
+    from memberManagement
+    where fkbno = #{bno}
+  </select>
+  
+  <select id="view" resultType="Member">
+  select name, telphone, tel, fax, email, memo
+  from memberManagement
+  where name = #{name}
+  </select>
+  
+  <select id="login" parameterType="string"
+          resultType="Member">
+    select bno ,email, password 
+    from member
+    where email=#{email} and password=#{password}
+  </select>
+  
+  
+  <update id="update" parameterType="Member">
+    update pms2_member set 
+        email=#{email}, 
+        pwd=password(#{password}) 
+    where mid=#{id}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from member 
+    where bno=#{bno}
+  </delete>
+  
+   <delete id="deleteMember" parameterType="String">
+    delete from memberManagement 
+    where name=#{name}
+  </delete>
+  
+  <insert id="insert" parameterType="Member">
+    insert into member(email,name,password) 
+    values(#{email},#{name},#{password})
+  </insert>
+  
+  <insert id="manageMentAdd" parameterType="Member">
+  	insert into memberManagement(fkbno, name, telphone, tel, fax, email, memo)
+  	value(#{bno},#{name},#{telphone},#{tel},#{fax},#{email},#{memo})
+  </insert>
+  
+  <select id="countAll" resultType="int">
+    select count(*) from pms2_member
+  </select>
+
+</mapper>
+
+
+
+

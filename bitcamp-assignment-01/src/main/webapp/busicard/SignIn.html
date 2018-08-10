@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+<script src="./node_modules/jquery/dist/jquery.js"></script>
+<script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./js/common.js"></script>
+</head>
+<body>
+<div class="container">
+
+<h1>로그인</h1>
+
+<form>
+이메일
+<input type="email" id="email">
+암호
+<input type="password" id="password">
+<button type="button" id="btn">로그인</button>
+</form>
+
+<script>
+$('#btn').click(function(){
+    $.post(serverApiAddr + '/json/member/login', 
+            {
+                email: $('#email').val(), 
+                password: $('#password').val()
+            },
+            function(data) {
+                if (data.status == 'success') {
+                    
+                    location.href=`list.html?no=${data.member.bno}`;
+                    
+                } else {
+                    
+					alert('아이디 혹은 비밀번호가 일치하지 않습니다!')
+                }
+            },
+            'json');
+})
+</script>
+
+</div><!-- .container -->
+
+</body>
+</html>

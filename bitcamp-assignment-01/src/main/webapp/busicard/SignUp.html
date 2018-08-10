@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+<script src="./node_modules/jquery/dist/jquery.js"></script>
+<script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./js/common.js"></script>
+</head>
+<body>
+<div class="container" style="display: inline-block; text-align: center;">
+
+<h2>회원가입</h2>
+<form>
+<div class="form-group">
+	<label for="email">이메일</label>
+	<input type="email" class="form-control" id="email" placeholder="example@test.com">
+</div>
+<div class="form-group">
+<label for="name">이름</label>
+<input type="text" id="name" class="form-control" placeholder="홍길동">
+</div>
+<div class="form-group">
+<label for="password">암호</label>
+<input type="text"  id="password" class="form-control" placeholder="...">
+</div>
+<button id="btns" type="button" class="btn btn-info">가입하기</button>
+</form>
+
+<script>
+$('#btns').click(function(){
+    
+    
+    console.log(serverApiAddr + '/json/member/add');
+    
+    
+    $.post(serverApiAddr + '/json/member/add', 
+            {
+       			 email: $('#email').val(), 
+       			 name: $('#name').val(), 
+       			 password: $('#password').val()
+            },
+            function(data) {
+                if(data.status == "success"){
+               	alert('가입이 완료 됐습니다!')
+                location.href = 'SignIn.html';
+                }else if(data.status == "fail"){
+                    alert('다시 가입해주세요.')
+                    location.href = 'SignUp.html'
+                }
+                
+            },
+            'json'); 
+    
+    
+})
+</script>
+
+</div><!-- .container -->
+
+
+
+</body>
+</html>
+
