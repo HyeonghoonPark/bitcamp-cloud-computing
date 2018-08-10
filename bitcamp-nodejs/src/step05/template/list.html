@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+<link rel="stylesheet" href="/css/bootstrap/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container">
+
+<h1>멤버 목록5</h1>
+<p><a href='view.html' class="btn btn-primary btn-sm">새회원</a></p>
+
+<table id="eListTable" class="table table-hover">
+<thead>
+  <tr><th>아이디</th><th>이메일</th></tr>
+</thead>
+<tbody>
+{{#each list}}
+<tr>
+	<td><a href='#' 
+		data-id='{{mid}}' 
+		class='viewLink'>{{mid}}</a></td>
+	<td>{{email}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<div>
+  <button id="ePrevBtn" class="btn btn-outline-secondary btn-sm">이전</button>
+  <span id="ePageNo"></span> 
+  <button id="eNextBtn" class="btn btn-outline-secondary btn-sm">다음</button>
+</div>
+
+</div><!-- .container -->
+
+<script src="/css/jquery/dist/jquery.min.js"></script>
+<script src="/css/popper.js/dist/umd/popper.min.js"></script>
+<script src="/css/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+let tbody = $('#eListTable > tbody'); 
+
+tbody.on('click', 'a.viewLink', function(event) {
+    event.preventDefault();
+    var id = $(event.target).attr('data-id');
+    location.href = `view?id=${id}`;
+});
+</script>
+</body>
+</html>
+    

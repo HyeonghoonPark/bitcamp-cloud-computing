@@ -43,7 +43,6 @@ app.use('/member', memberRouter)
 app.use('/team', teamRouter)
 
 
-
 app.get('/test01', (req, res) => {
     res.writeHead(200,{'Content-Type' : 'text/plain;charset=UTF-8'})
     res.write(`name=${req.query.name}\n`);

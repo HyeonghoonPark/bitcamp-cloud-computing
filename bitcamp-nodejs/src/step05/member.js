@@ -20,6 +20,8 @@ memberdao.setConnectionPool(pool);
 // get 요청에 대해 핸들러를 등록하기! (post요청은 post)
 Router.get('/list', (req, res) => {
     
+    console.log('ccc');
+    
     var pageNo = 1;
     var pageSize = 3;
     
@@ -31,53 +33,76 @@ Router.get('/list', (req, res) => {
     }
     
     memberdao.list(pageNo, pageSize, (err, results) => {
-        
         if (err){
             res.end('DB 조회 중 예외 발생!')
             return;
         }
         
-        for (var row of results) {
-            res.write(`${row.email}, ${row.mid}\n`);
-        }
-        res.end(); 
+        console.log(results)
+      
+        res.render('list', {list : results})
         
     });
 })
-Router.get('/add', (req, res) => {
+Router.get('/view', (req, res) => {
     
-    res.writeHead(200,{'Content-Type' : 'text/plain;charset=UTF-8'})
    
-    memberdao.add(req.query, (err, result) => {
+    memberdao.view(req.query, (err, result) => {
         
         if (err){
-            res.end('DB 조회 중 예외 발생!')
+            res.end(err)
             return;
         }
+        
+        console.log(result);
+        
+        res.writeHead(302, {"Location":`/member/view.html?id=${result[0].mid}&email=${result[0].email}&pwd=${result[0].pwd}`});
+
+        res.end();
+
+    })
+    
+    
+})
+
+Router.post('/add', (req, res) => {
+    
+    memberdao.add(req.body, (err, result) => {
+        
+        if (err){
+            res.end(err)
+            return;
+        }
+        
+        res.writeHead(302, {"Location":`/member/list`});
+
+        
         res.end('가입이 완료 됐습니다!'); 
+        
     })
     
 })
-Router.get('/update', (req, res) => {
+Router.post('/update', (req, res) => {
     
-    res.writeHead(200,{'Content-Type' : 'text/plain;charset=UTF-8'})
 
-    memberdao.update(req.query, (err,result) => {
+    memberdao.update(req.body, (err,result) => {
         
         if (err){
             res.end('DB 조회 중 예외 발생!')
             return;
         }
+        
+        res.writeHead(302, {"Location":`/member/list`});
+        
         res.end('변경 성공입니다!'); 
 
     })
     
 })
-Router.get('/delete', (req, res) => {
+Router.post('/remove', (req, res) => {
     
-    res.writeHead(200,{'Content-Type' : 'text/plain;charset=UTF-8'})
     
-    memberdao.remove(req.query , (err, result) => {
+    memberdao.remove(req.body , (err, result) => {
         
         if (err){
             res.end('DB 조회 중 예외 발생!')
@@ -85,9 +110,14 @@ Router.get('/delete', (req, res) => {
         }
         console.log(result);
         
-        res.end('삭제성공입니다!'); 
+        res.writeHead(302, {"Location":`/member/list`});
+        
+        res.end(); 
+        
+        
     })
     
 })
+
 
 module.exports = Router;

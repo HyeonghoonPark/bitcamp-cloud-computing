@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+<link rel="stylesheet" href="/css/bootstrap/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container">
+<h1>멤버 보기</h1>
+<form id="form">
+<div class="form-group row">
+    <label for="eId" class="col-sm-2 col-form-label">아이디</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="id" id="eId" placeholder="아이디">
+    </div>
+</div>
+<div class="form-group row">
+    <label for="eEmail" class="col-sm-2 col-form-label">이메일</label>
+    <div class="col-sm-9">
+      <input type="email" class="form-control" name="email" id="eEmail" placeholder="이메일">
+    </div>
+</div>
+<div class="form-group row">
+    <label for="ePassword" class="col-sm-2 col-form-label">암호</label>
+    <div class="col-sm-4">
+      <input type="password" class="form-control" name="password" id="ePassword" placeholder="암호">
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-sm-10">
+		<button id="eListBtn" type="button" class="btn btn-primary btn-sm">목록</button>
+		<button id="eUpdateBtn" type="button" class="viewform btn btn-primary btn-sm">변경</button>
+		<button id="eDeleteBtn" type="button" class="viewform btn btn-primary btn-sm">삭제</button>
+		<button id="eAddBtn" type="button" class="newform btn btn-primary btn-sm">등록</button>
+    </div>
+</div>
+</form>
+
+</div><!-- .container -->
+
+<script src="/css/jquery/dist/jquery.min.js"></script>
+<script src="/css/popper.js/dist/umd/popper.min.js"></script>
+<script src="/css/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+
+function getQuerystring(paramName){
+	var _tempUrl = window.location.search.substring(1); 
+	var _tempArray = _tempUrl.split('&'); 
+	for(var i = 0; _tempArray.length; i++) { 
+		var _keyValuePair = _tempArray[i].split('=');
+		
+		if(_keyValuePair[0] == paramName){ 
+			return _keyValuePair[1]; 
+		} 
+	} 
+}
+
+if(window.location.search){
+	$('#eAddBtn').css('display','none')
+	$('#eId').attr('value', getQuerystring('id'))
+	$('#eEmail').attr('value', getQuerystring('email'))
+}else{
+	$('#eUpdateBtn').css('display','none')
+	$('#eDeleteBtn').css('display','none')
+}
+
+	
+$('#eAddBtn').on('click',function(){
+	var form = $('#form')
+	
+	form.attr('action','add')
+	form.attr('method','post')
+	form.submit();
+})
+
+$('#eUpdateBtn').on('click',function(){
+	var form = $('#form')
+	
+	form.attr('action','update')
+	form.attr('method','post')
+	form.submit();
+	
+})
+
+$('#eDeleteBtn').on('click',function(){
+	var form = $('#form')
+	
+	form.attr('action','remove')
+	form.attr('method','post')
+	form.submit();
+	
+})
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+    

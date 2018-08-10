@@ -38,7 +38,7 @@ public class MemberUpdateServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             try (
                 Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://13.125.81.120:3306/studydb",
+                    "jdbc:mysql://13.125.254.147:3306/studydb",
                     "study", "1111");
                 PreparedStatement stmt = con.prepareStatement(
                     "update pms2_member set email=?, pwd=password(?) where mid=?");) {

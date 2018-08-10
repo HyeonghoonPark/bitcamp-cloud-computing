@@ -15,7 +15,7 @@ public class ContextLoaderListener
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("ContextLoaderListener 실행!");
         MemberDao memberDao = new MemberDao(
-                "jdbc:mysql://13.125.81.120:3306/studydb",
+                "jdbc:mysql://13.125.254.147:3306/studydb",
                 "study", "1111");
         
         ServletContext sc = sce.getServletContext();

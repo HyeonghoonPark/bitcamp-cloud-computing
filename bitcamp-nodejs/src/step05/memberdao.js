@@ -18,9 +18,19 @@ exports.list = (pageNo = 1, pageSize = 3, handler) => {
     
 }
 
-exports.add = (data, handler) => {
+exports.view = (data, handler) => {
+    
+    pool.query('select mid, email, pwd from pms2_member where mid = ?',
+            [data.id],
+            function(err, results) {
+        handler(err, results);
+    });
+    
+}
 
-    pool.query('insert into pms2_member(mid, email, pwd) values(?, ?, ?)',
+exports.add = (data, handler) => {
+    console.log(data.id)
+    pool.query('insert into pms2_member(mid, email, pwd) values(?, ?, password(?))',
             [data.id, data.email, data.password],
             function(err, result) {
                 handler(err, result)
@@ -29,8 +39,8 @@ exports.add = (data, handler) => {
 
 exports.update = (data, handler) => {
     
-    pool.query('update pms2_member set email=? where mid=? ',
-            [data.email,  data.id],
+    pool.query('update pms2_member set email=?, pwd=? where mid=? ',
+            [data.email,  data.password, data.id],
             function(err, result) {
         handler(err, result); 
 });
@@ -46,3 +56,4 @@ exports.remove = (data, handler) => {
     });
     
 }
+
