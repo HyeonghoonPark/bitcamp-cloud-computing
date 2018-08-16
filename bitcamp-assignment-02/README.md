@@ -25,6 +25,7 @@
 - 구현 부족(13점/9점/4점)
 - 미구현(11점/8점/3점)
 
+
 ## 구현
 
 ### 1단계 - 요구사항 정의
@@ -32,4 +33,28 @@
 	- Actor 식별
 	- Actor를 통해 Use Case 식별
 - Use Case 명세서 작성
-	
+	- 회원가입탈퇴 명세서 작성하기
+	- 회원인증 명세서 작성
+	- 명함관리 명세서 작성
+- DB 모델링
+	- DB 모델 작성
+	- Database에 테이블 생성
+
+### 2단계 - 웹 프로젝트 준비
+- 프로젝트 폴더 생성
+	- 'mkdir bitcamp-assignment-02' 실행
+
+- gradle 설정
+	- 'gradle init' 실행
+
+- 소스 디렉토리 준비
+	- 'src/main/java'
+	- 'src/main/resources'
+	- 'src/test/java'
+	- 'src/test/resources'
+	- 'src/main/webapp
+- 이클립스 설정 파일 준비
+	- 'build.gradle' 파일 편집
+		- 플로그인 추가 'java' , 'eclipse-wtp', 'war'
+	- 'gradle eclipse' 실행
+	- 이클립스로 웹 프로젝트 임포트
