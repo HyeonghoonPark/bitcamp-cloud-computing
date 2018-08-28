@@ -31,6 +31,7 @@ function loadList(page, size) {
         }, function() {console.log("로딩 성공!")})
      .done(function(result) {
        data = result;
+       console.log(data.list)
        var trListHTML = trTemplateFn({list: data.list})
        tbody.html(trListHTML);
        

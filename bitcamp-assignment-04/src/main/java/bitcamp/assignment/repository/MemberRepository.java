@@ -6,7 +6,7 @@ import bitcamp.assignment.domain.Member;
 
 public interface MemberRepository {
 
-	int insert(Member member);
-	Member findByEmailAndPassword(Map<String, Object> params);
+    int insert(Member member);
+    Member findByEmailAndPassword(Map<String,Object> params);
 
 }

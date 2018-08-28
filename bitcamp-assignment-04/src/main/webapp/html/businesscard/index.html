@@ -7,25 +7,55 @@
 <link rel="stylesheet" href="../css/common2.css">
 <style>
 
-section{
-	border: 1px solid red;
-	box-sizing: border-box;
+section {
+    box-sizing: border-box;
 }
-#content{
-	min-height: 400px;
-	overflow:hidden;
+
+#content {
+    min-height: 400px;
+    overflow: hidden;
 }
-#list{
-	float: left;
-	width: 150px;
+
+#list {
+    float: left;
+    width: 150px;
+    padding: 10px;
+    border-right: 1px solid gray;
+    margin: 5px 0;
 }
-#detail{
-	float: left;
-	width: 500px;
+
+#list input {
+    width: 100%;
 }
+
+#list > article:first-child {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    height: 30px;
+    padding: 5px;
+    padding-left: 20px;
+    border-width: 0px;
+}
+
+#form {
+    margin-left: 150px;
+    padding: 10px;
+}
+
+#form label {
+    text-align: right;
+}
+
+#form #fName {
+    font-weight: bold;
+}
+
 </style>
 </head>
 <body>
+
 <div class="container">
 
 <header></header>
@@ -34,14 +64,15 @@ section{
 
 <section id="list"></section>
 
-<section id="detail"></section>
+<section id="form"></section>
 
-</section> <!-- #content -->
+</section><!-- #content -->
 
 <footer></footer>
 
-</div> <!-- .container -->
+</div><!-- .container -->
 
+<script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-	@RequestMapping("/hello")
-	public Object hello() {
-		
-		HashMap<String, Object> result = new HashMap<>();
-		result.put("name", "홍길동");
-		
-		return result;
-	}
+    @RequestMapping("/hello")
+    public Object hello() {
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("name", "홍길동");
+        return result;
+    }
 }
+
+
+
+
+
+
+
+

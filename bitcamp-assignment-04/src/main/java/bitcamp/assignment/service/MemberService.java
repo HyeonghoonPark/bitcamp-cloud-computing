@@ -4,8 +4,8 @@ import bitcamp.assignment.domain.Member;
 
 public interface MemberService {
 
-	int add(Member member);
+    int add(Member member);
 
-	Member getMember(String email, String password);
-	
+    Member getMember(String email, String password);
+
 }

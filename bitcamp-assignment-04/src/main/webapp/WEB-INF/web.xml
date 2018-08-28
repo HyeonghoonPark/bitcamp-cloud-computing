@@ -6,10 +6,10 @@
   version="4.0"
   metadata-complete="false">
     
-    <!-- 
+    <!--  
     <request-character-encoding>UTF-8</request-character-encoding>
-	-->
-	
+    -->
+    
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
