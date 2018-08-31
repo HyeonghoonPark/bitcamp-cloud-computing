@@ -1,0 +1,22 @@
+// 시스템 프로퍼티 사용하기
+// => -D 명령어 옵션으로 name 값이 지정되었으면 그 값을 꺼낸다.
+//    예) gradle -Dname=Kim hello
+// => --system-prop 옵션으로 name 값이 지정되었으면 그 값을 사용한다.
+//    예) gradle --system-prop name=Park hellp
+// => gradle.properties 파일이 있으면 그 파일에서 찾아 꺼낸다.
+//    systemProp.name=HongKildong
+//
+
+println "Hello, " + System.properties['name']
+
+task hello {}
+
+// 실행1: gradle.properties 파일에 저장된 값 사용하기
+// $ gradle hello
+// 
+// 실행2: 명령어 옵션 -D 로 지정한 값 사용하기
+// $ gradle -Dname=Kim hello 
+//
+// 실행3: 명령어 옵션 --system-prop 로 저장한 값 사용하기
+// $ gradle --system-prop name=Park hello
+//

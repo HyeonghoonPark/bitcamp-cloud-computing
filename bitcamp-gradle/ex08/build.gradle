@@ -1,0 +1,15 @@
+apply plugin : 'java'
+
+println sourceCompatibility
+
+//sourceCompatibility = '1.8'
+
+tasks.withType(JavaCompile){
+	sourceCompatibility = '1.8'
+	println "$name hello"
+	println sourceCompatibility
+}
+
+println sourceCompatibility
+
+task t1

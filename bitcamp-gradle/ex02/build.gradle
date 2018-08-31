@@ -1,0 +1,6 @@
+//defaultTasks = ['t1']
+defaultTasks 't1'
+
+task t1 {
+	println "설정하기..!"
+}

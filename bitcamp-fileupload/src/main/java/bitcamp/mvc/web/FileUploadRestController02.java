@@ -28,6 +28,7 @@ public class FileUploadRestController02 {
             MultipartFile[] files) {
         
         System.out.println("upload01()...호출됨!");
+        System.out.println("여기맞음!");
         
         HashMap<String,Object> result = new HashMap<>();
         result.put("name", name);
